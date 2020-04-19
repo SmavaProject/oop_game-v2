@@ -21,10 +21,22 @@ class Phrase {
         });
 
     };
-    checkLetter(){
-
+    checkLetter(letter){
+        for (let i = 0; i< this.phrase.length; i++){
+            if (this.phrase[i] === letter){
+                return true;
+            }
+        }
+        return false;
     };
-    showMatchedLetter(){
-
+    showMatchedLetter(letter){
+        const allLettersInPhrase = document.querySelectorAll('#phrase .letter');
+        allLettersInPhrase.forEach(currentLetter =>{
+            //console.log(currentLetter);
+            if  (letter == currentLetter.innerHTML){
+               currentLetter.classList.remove('hide');
+               currentLetter.classList.add('show');
+           }
+        });
     };
 }

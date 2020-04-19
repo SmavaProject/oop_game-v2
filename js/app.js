@@ -1,5 +1,5 @@
 const startGameBtn = document.getElementById("btn__reset");
-const letters = document.querySelectorAll("#qwerty .key");
+const letters = document.querySelectorAll(".key");
 const game = new Game(1, 1, "lala");
 
 startGameBtn.addEventListener('click', e =>{
@@ -8,7 +8,8 @@ startGameBtn.addEventListener('click', e =>{
 
 letters.forEach(letter =>{
     letter.addEventListener('click', e =>{
-        game.handleInteraction();
+        const lett = e.target.textContent;
+        game.handleInteraction(lett);
     });
 });
 

@@ -6,7 +6,11 @@ class Game{
     }
 
     createPhrases(){
-        const phrases = [new Phrase('lala'), new Phrase(''), new Phrase(''), new Phrase(''), new Phrase('')];
+        const phrases = [new Phrase('Life is like a box of chocolates'),
+            new Phrase('Was today really necessary'),
+            new Phrase('I am objective I object to everything'),
+            new Phrase('You can not be late until you show up'),
+            new Phrase('When nothing is going right go left')];
         return phrases;
     }
 
@@ -20,12 +24,18 @@ class Game{
     getRandomPhrase(){
         const randomIndex = Math.floor(Math.random() * this.phrases.length +1);
         const phrase = this.phrases[randomIndex];
+        console.log(`random phrase ${phrase}`);
         return phrase;
     };
 
-    handleInteraction(){
-        //const selectedButton;
-        alert('lala');
+    handleInteraction(letter){
+        if(this.activePhrase.checkLetter(letter)){
+            this.activePhrase.showMatchedLetter(letter);
+            alert('lala');
+            this.checkForWin();
+        }else{
+            this.removeLife();
+        }
 
     };
 
@@ -45,7 +55,13 @@ class Game{
     };
 
     checkForWin(){
-
+        const allLettersInPhrase = document.querySelectorAll('#phrase .letter');
+        allLettersInPhrase.forEach(letter =>{
+           if (letter.classList.contains('hide')){
+               return false;
+           }
+        });
+        return true;
     };
 
     gameOver(){
