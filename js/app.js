@@ -8,7 +8,8 @@ startGameBtn.addEventListener('click', e =>{
 
 letters.forEach(letter =>{
     letter.addEventListener('click', e =>{
-        const lett = e.target.textContent;
+        //const lett = e.target.textContent;
+        const lett = e.target;
         game.handleInteraction(lett);
     });
 });

@@ -1,4 +1,5 @@
 class Game{
+    startScreen = document.getElementById("overlay");
     constructor() {
         this.missed = 0;
         this.phrases = this.createPhrases();
@@ -15,8 +16,8 @@ class Game{
     }
 
     startGame(){
-        const startScreen = document.getElementById("overlay");
-        startScreen.style.display = 'none';
+        this.startScreen.style.display = 'none';
+        this.resetGame();
         this.activePhrase =  this.getRandomPhrase();//????????
         this.activePhrase.addPhraseToDisplay();
     };
@@ -29,14 +30,17 @@ class Game{
     };
 
     handleInteraction(letter){
-        if(this.activePhrase.checkLetter(letter)){
-            this.activePhrase.showMatchedLetter(letter);
-            alert('lala');
-            this.checkForWin();
+        //disable clicked letter
+        letter.disabled = true;
+
+        if(this.activePhrase.checkLetter(letter.textContent)) {
+            this.activePhrase.showMatchedLetter(letter.textContent);
+            if (this.checkForWin()) {
+                this.gameOver();
+            }
         }else{
             this.removeLife();
         }
-
     };
 
     removeLife(){
@@ -44,28 +48,75 @@ class Game{
         const lives = document.querySelectorAll("#scoreboard .tries");
         for (let i = 0; i< lives; i++){
             if (lives[i].getAttribute("src")=="images/liveHeart.png"){
+                lives[i].removeAttribute("src");
                 lives[i].setAttribute("src", "images/lostHeart.png");
             }
             break;
         }
         this.missed++;
+        console.log(`missed = ${this.missed}`);
         if (this.missed == 5){
             this.gameOver();
         }
     };
 
+    /***
+     * Checks to see if the player has revealed all of the letters in the active phrase
+     * @return {boolean}
+     */
     checkForWin(){
-        const allLettersInPhrase = document.querySelectorAll('#phrase .letter');
+        const allLettersInPhrase = document.querySelectorAll('#phrase li');
+        let noHideClass = true;
         allLettersInPhrase.forEach(letter =>{
            if (letter.classList.contains('hide')){
-               return false;
+               //console.log('inside allLettersInPhrase' + letter.classList);
+               noHideClass = false;
+               //break;
            }
         });
-        return true;
+        return noHideClass;
     };
+
 
     gameOver(){
+        this.startScreen.style.display = 'block';
+        this.startScreen.classList.remove('start');
+        const endMessage = document.querySelector("#overlay h1");
+        if(this.missed < 5){
+            endMessage.innerHTML = "You a so smart!";
+            this.startScreen.classList.add('win');
+        }else{
+            endMessage.innerHTML = "Better luck next time!";
+            this.startScreen.classList.add('lose');
+        }
 
     };
 
+    resetGame(){
+        //hide start screen
+        this.startScreen.style.display = 'none';
+        //remove the phrase
+        const allLettersInPhrase = document.querySelectorAll('#phrase ul li');
+        console.log(`length allLettersInPhrase = ${allLettersInPhrase.length}`);
+        for (let i = 0; i< allLettersInPhrase.length; i++){
+            const currLI = allLettersInPhrase[i];
+            console.log(`removing currLI ${currLI}`);
+            currLI.parentNode.removeChild(currLI);
+        }
+        //enable buttons
+        const buttons = document.querySelectorAll('#qwerty .key');
+        buttons.forEach( button =>{
+            button.disabled = false;
+        });
+        //reset harts
+
+        //reset missed
+        this.missed = 0;
+    }
+
 }
+
+
+/***
+ innerHtml vs textContent!!!!!
+ */
