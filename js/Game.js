@@ -7,6 +7,10 @@ class Game{
         this.activePhrase = null; //???????????
     }
 
+    /***
+     *
+     * @return {[Phrase, Phrase, Phrase, Phrase, Phrase]}
+     */
     createPhrases(){
         const phrases = [new Phrase('Life is like a box of chocolates'),
             new Phrase('Was today really necessary'),
@@ -16,19 +20,30 @@ class Game{
         return phrases;
     }
 
+    /***
+     * Starts screen overlay
+     */
     startGame(){
         this.startScreen.style.display = 'none';
         this.resetGame();
-        this.activePhrase =  this.getRandomPhrase();//????????
+        this.activePhrase =  this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
     };
 
+    /***
+     * Randomly retrieves one phrase from the phrases array
+     * @return {Phrase}
+     */
     getRandomPhrase(){
         const randomIndex = Math.floor(Math.random() * this.phrases.length +1);
         const phrase = this.phrases[randomIndex];
         return phrase;
     };
 
+    /***
+     *
+     * @param letter
+     */
     handleInteraction(letter){
         //disable clicked letter
         letter.disabled = true;
@@ -39,6 +54,7 @@ class Game{
                 this.gameOver();
             }
         }else{
+            letter.classList.add('wrong');
             this.removeLife();
         }
     };
@@ -106,6 +122,7 @@ class Game{
         const buttons = document.querySelectorAll('#qwerty .key');
         buttons.forEach( button =>{
             button.disabled = false;
+            button.classList.remove('wrong');
         });
         //reset lives
         this.lives.forEach(live =>{
