@@ -1,5 +1,6 @@
 class Game{
     startScreen = document.getElementById("overlay");
+    lives = document.querySelectorAll("#scoreboard li img");
     constructor() {
         this.missed = 0;
         this.phrases = this.createPhrases();
@@ -25,7 +26,6 @@ class Game{
     getRandomPhrase(){
         const randomIndex = Math.floor(Math.random() * this.phrases.length +1);
         const phrase = this.phrases[randomIndex];
-        console.log(`random phrase ${phrase}`);
         return phrase;
     };
 
@@ -43,18 +43,17 @@ class Game{
         }
     };
 
+    /***
+     *  Removes a life from the scoreboard
+     */
     removeLife(){
-        //const scoreboard = document.getElementById("scoreboard");
-        const lives = document.querySelectorAll("#scoreboard .tries");
-        for (let i = 0; i< lives; i++){
-            if (lives[i].getAttribute("src")=="images/liveHeart.png"){
-                lives[i].removeAttribute("src");
-                lives[i].setAttribute("src", "images/lostHeart.png");
+        for (let i = 0; i< this.lives.length; i +=1 ){
+            if (this.missed == i){
+                this.lives[i].setAttribute('src', "images/lostHeart.png");
+                break;
             }
-            break;
         }
         this.missed++;
-        console.log(`missed = ${this.missed}`);
         if (this.missed == 5){
             this.gameOver();
         }
@@ -84,9 +83,11 @@ class Game{
         const endMessage = document.querySelector("#overlay h1");
         if(this.missed < 5){
             endMessage.innerHTML = "You a so smart!";
+            this.startScreen.classList.remove('lose');
             this.startScreen.classList.add('win');
         }else{
             endMessage.innerHTML = "Better luck next time!";
+            this.startScreen.classList.remove('win');
             this.startScreen.classList.add('lose');
         }
 
@@ -97,10 +98,8 @@ class Game{
         this.startScreen.style.display = 'none';
         //remove the phrase
         const allLettersInPhrase = document.querySelectorAll('#phrase ul li');
-        console.log(`length allLettersInPhrase = ${allLettersInPhrase.length}`);
         for (let i = 0; i< allLettersInPhrase.length; i++){
             const currLI = allLettersInPhrase[i];
-            console.log(`removing currLI ${currLI}`);
             currLI.parentNode.removeChild(currLI);
         }
         //enable buttons
@@ -108,8 +107,10 @@ class Game{
         buttons.forEach( button =>{
             button.disabled = false;
         });
-        //reset harts
-
+        //reset lives
+        this.lives.forEach(live =>{
+            live.setAttribute('src', "images/liveHeart.png");
+        });
         //reset missed
         this.missed = 0;
     }
