@@ -4,7 +4,7 @@ class Game{
     constructor() {
         this.missed = 0;
         this.phrases = this.createPhrases();
-        this.activePhrase = null; //???????????
+        this.activePhrase = null;
     }
 
     /***
@@ -50,6 +50,7 @@ class Game{
 
         if(this.activePhrase.checkLetter(letter.textContent)) {
             this.activePhrase.showMatchedLetter(letter.textContent);
+            letter.classList.add('right');
             if (this.checkForWin()) {
                 this.gameOver();
             }
@@ -86,7 +87,7 @@ class Game{
            if (letter.classList.contains('hide')){
                //console.log('inside allLettersInPhrase' + letter.classList);
                noHideClass = false;
-               //break;
+               //break; <- bug!!!
            }
         });
         return noHideClass;
@@ -123,6 +124,7 @@ class Game{
         buttons.forEach( button =>{
             button.disabled = false;
             button.classList.remove('wrong');
+            button.classList.remove('right');
         });
         //reset lives
         this.lives.forEach(live =>{
