@@ -24,13 +24,12 @@ document.addEventListener('keydown', event=>{
     let pushedButton;
     virtualButtons.forEach(button =>{
         if (button.textContent == event.key) {
-            alert(button.textContent);
             pushedButton = button;
         }
     });
     if (typeof pushedButton !== 'undefined'){
         game.handleInteraction(pushedButton);
     }else{
-        alert("Invalid input, symbols are not accepted");
+        alert("Invalid input, symbol is not accepted");
     }
 });

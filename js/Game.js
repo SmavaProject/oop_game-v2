@@ -35,7 +35,7 @@ class Game{
      * @return {Phrase}
      */
     getRandomPhrase(){
-        const randomIndex = Math.floor(Math.random() * this.phrases.length +1);
+        const randomIndex = Math.floor(Math.random() * this.phrases.length);
         const phrase = this.phrases[randomIndex];
         return phrase;
     };
@@ -87,7 +87,7 @@ class Game{
            if (letter.classList.contains('hide')){
                //console.log('inside allLettersInPhrase' + letter.classList);
                noHideClass = false;
-               //break; <- bug!!!
+               //break; <- bug!!! ???
            }
         });
         return noHideClass;
@@ -99,7 +99,7 @@ class Game{
         this.startScreen.classList.remove('start');
         const endMessage = document.querySelector("#overlay h1");
         if(this.missed < 5){
-            endMessage.innerHTML = "You a so smart!";
+            endMessage.innerHTML = "You are so smart!";
             this.startScreen.classList.remove('lose');
             this.startScreen.classList.add('win');
         }else{
