@@ -8,7 +8,7 @@ startGameBtn.addEventListener('click', e =>{
     game.startGame();
 });
 /***
- * Handle button clicks
+ * Handle virtual button clicks
  */
 letters.forEach(letter =>{
     letter.addEventListener('click', e =>{
@@ -16,7 +16,9 @@ letters.forEach(letter =>{
         game.handleInteraction(lette);
     });
 });
-
+/***
+ * Handle keyboard input
+ */
 document.addEventListener('keydown', event=>{
     const virtualButtons = document.querySelectorAll('#qwerty button');
     let pushedButton;
