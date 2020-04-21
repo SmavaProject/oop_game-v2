@@ -24,7 +24,6 @@ class Game{
      * Starts screen overlay
      */
     startGame(){
-        this.startScreen.style.display = 'none';
         this.resetGame();
         this.activePhrase =  this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
