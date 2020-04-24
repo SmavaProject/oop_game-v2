@@ -49,7 +49,7 @@ class Game{
 
         if(this.activePhrase.checkLetter(letter.textContent)) {
             this.activePhrase.showMatchedLetter(letter.textContent);
-            letter.classList.add('right');
+            letter.classList.add('chosen');
             if (this.checkForWin()) {
                 this.gameOver();
             }
@@ -123,7 +123,7 @@ class Game{
         buttons.forEach( button =>{
             button.disabled = false;
             button.classList.remove('wrong');
-            button.classList.remove('right');
+            button.classList.remove('chosen');
         });
         //reset lives
         this.lives.forEach(live =>{

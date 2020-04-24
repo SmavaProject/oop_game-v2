@@ -1,10 +1,11 @@
 const startGameBtn = document.getElementById("btn__reset");
 const virtualKeyboardLetters = document.querySelectorAll(".key");
-const game = new Game();
+let game;
 /***
  * Start game
  */
 startGameBtn.addEventListener('click', e =>{
+    game = new Game();
     game.startGame();
 });
 /***
@@ -26,7 +27,7 @@ document.addEventListener('keydown', event=>{
             pushedButton = button;
         }
     });
-    if (typeof pushedButton !== 'undefined'){
+    if (typeof pushedButton !== 'undefined' && pushedButton.disabled !== true){
         game.handleInteraction(pushedButton);
     }else{
         alert("Invalid input, symbol is not accepted");
